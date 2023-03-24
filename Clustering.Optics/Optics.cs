@@ -1,14 +1,16 @@
-﻿using Priority_Queue;
-using System;
-using System.Collections.Concurrent;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using PriorityQueue;
 
 namespace Clustering.Optics
 {
     public class OPTICS
     {
+        public DistanceFunction DistanceFunction { get; set; } = DistanceFunction.Euclidian;
+        
+        public double HaversineCorrectionFactor { get; set; } = 15;
+        
         private struct PointRelation
         {
             public readonly UInt32 To;
@@ -44,7 +46,7 @@ namespace Clustering.Optics
             _minPts = minPts;
 
             _outputIndexes = new List<UInt32>(_points.Length);
-            _seeds = new Priority_Queue.HeapPriorityQueue<Point>(_points.Length);
+            _seeds = new PriorityQueue.HeapPriorityQueue<Point>(_points.Length);
 
         }
 
@@ -63,8 +65,7 @@ namespace Clustering.Optics
             return Math.Sqrt(dist);
         }
 
-        // TODO add way to select which distance to use
-        public double ManhatanDistance(UInt32 p1Index, UInt32 p2Index)
+        public double ManhattanDistance(UInt32 p1Index, UInt32 p2Index)
         {
             double dist = 0;
             var vec1 = _points[p1Index].Vector;
@@ -79,13 +80,62 @@ namespace Clustering.Optics
             return dist;
         }
 
+        public double HaversineDistance(UInt32 p1Index, UInt32 p2Index)
+        {
+            // check for vector dimensions
+            var vec1 = _points[p1Index].Vector;
+            var vec2 = _points[p2Index].Vector;
+
+            if (vec1.Length != 2 || vec2.Length != 2)
+            {
+                return double.MaxValue;
+            }
+
+            // extract lat/lon data for haversine calculation
+            double latitudeA = vec1[0];
+            double longitudeA = vec1[1];
+            double latitudeB = vec2[0];
+            double longitudeB = vec2[1];
+
+            // haversine calculation
+            var mpi = Math.PI / 180;
+
+            latitudeA *= mpi;
+            longitudeA *= mpi;
+            latitudeB *= mpi;
+            longitudeB *= mpi;
+
+            var deltaLat = latitudeB - latitudeA;
+            var deltaLon = longitudeB - longitudeA;
+
+            var a = Math.Sin(deltaLat / 2.0) * Math.Sin(deltaLat / 2.0) + Math.Cos(latitudeB) * Math.Sin(deltaLon / 2.0) * Math.Sin(deltaLon / 2.0);
+            var km = 6372.797 * 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+            return km * 1000;
+        }
+
         private void GetNeighborhood(UInt32 p1Index, List<PointRelation> neighborhoodOut)
         {
             neighborhoodOut.Clear();
 
             for (UInt32 p2Index = 0; p2Index < _points.Length; p2Index++)
             {
-                var distance = EuclideanDistance(p1Index, p2Index);
+                var distance = double.MaxValue;
+
+                switch(this.DistanceFunction)
+                {
+                    case DistanceFunction.Euclidian:
+                        distance = this.EuclideanDistance(p1Index, p2Index);
+                        break;
+
+                    case DistanceFunction.Manhattan:
+                        distance = this.ManhattanDistance(p1Index, p2Index);
+                        break;
+
+                    case DistanceFunction.Haversine:
+                        distance = this.HaversineDistance(p1Index, p2Index);
+                        break;
+                }
 
                 if (distance <= _eps)
                 {

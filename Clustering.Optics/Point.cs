@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Clustering.Optics
 {
-    internal class Point : Priority_Queue.PriorityQueueNode
+    internal class Point : PriorityQueue.PriorityQueueNode
     {
         public Point(UInt32 index, UInt32 id, double[] vector)
         {

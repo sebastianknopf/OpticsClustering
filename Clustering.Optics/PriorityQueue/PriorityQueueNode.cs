@@ -1,4 +1,4 @@
-﻿namespace Priority_Queue
+﻿namespace PriorityQueue
 {
     internal class PriorityQueueNode
     {
