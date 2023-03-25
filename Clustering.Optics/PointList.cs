@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Clustering.Optics
+namespace System.Windows.MachineLearning.Optics
 {
-    public class PointsList
+    public class PointList
     {
         internal List<Point> _points;
 
-        public PointsList()
+        public PointList()
         {
             _points = new List<Point>();
         }

@@ -42,11 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DistanceFunction.cs" />
+    <Compile Include="Cluster.cs" />
+    <Compile Include="Metric.cs" />
     <Compile Include="Optics.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="PointReachability.cs" />
-    <Compile Include="PointsList.cs" />
+    <Compile Include="PointList.cs" />
     <Compile Include="PriorityQueue\HeapPriorityQueue.cs" />
     <Compile Include="PriorityQueue\PriorityQueueNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

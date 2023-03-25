@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows.MachineLearning.Optics.PriorityQueue;
 
-namespace Clustering.Optics
+namespace System.Windows.MachineLearning.Optics
 {
-    internal class Point : PriorityQueue.PriorityQueueNode
+    internal class Point : PriorityQueueNode
     {
         public Point(UInt32 index, UInt32 id, double[] vector)
         {

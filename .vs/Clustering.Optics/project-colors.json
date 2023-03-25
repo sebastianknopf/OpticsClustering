@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "f2bef03b-c8b5-4733-b7df-2cdd2b629b57": {
+      "ProjectGuid": "f2bef03b-c8b5-4733-b7df-2cdd2b629b57",
+      "DisplayName": "Clustering.Optics.Example",
+      "ColorIndex": 0
+    },
+    "9b099844-5051-41cf-9959-838a489d08a2": {
+      "ProjectGuid": "9b099844-5051-41cf-9959-838a489d08a2",
+      "DisplayName": "Clustering.Optics",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
