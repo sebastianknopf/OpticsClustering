@@ -1,6 +1,4 @@
-﻿using System.Windows.MachineLearning.Optics.PriorityQueue;
-
-namespace System.Windows.MachineLearning.Optics
+﻿namespace System.MachineLearning.Optics
 {
     internal class Point : PriorityQueueNode
     {
@@ -8,6 +6,18 @@ namespace System.Windows.MachineLearning.Optics
         {
             Index = index;
             Id = id;
+            Timestamp = DateTime.MinValue;
+            Vector = vector;
+
+            WasProcessed = false;
+            ReachabilityDistance = double.NaN;
+        }
+
+        public Point(UInt32 index, UInt32 id, DateTime timestamp, double[] vector)
+        {
+            Index = index;
+            Id = id;
+            Timestamp = timestamp;
             Vector = vector;
 
             WasProcessed = false;
@@ -15,6 +25,7 @@ namespace System.Windows.MachineLearning.Optics
         }
 
         public readonly UInt32 Id;
+        public readonly DateTime Timestamp;
         public readonly double[] Vector;
         public readonly UInt32 Index;
 

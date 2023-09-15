@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace System.Windows.MachineLearning.Optics
+namespace System.MachineLearning.Optics
 {
     public class PointList
     {
@@ -15,6 +15,12 @@ namespace System.Windows.MachineLearning.Optics
         public void AddPoint(UInt32 id, double[] vector)
         {
             var newPoint = new Point((UInt32)_points.Count, id, vector);
+            _points.Add(newPoint);
+        }
+
+        public void AddPoint(UInt32 id, DateTime timestamp, double[] vector)
+        {
+            var newPoint = new Point((UInt32)_points.Count, id, timestamp, vector);
             _points.Add(newPoint);
         }
     }

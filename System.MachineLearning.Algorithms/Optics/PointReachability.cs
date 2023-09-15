@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace System.Windows.MachineLearning.Optics
+namespace System.MachineLearning.Optics
 {
     public class PointReachability
     {

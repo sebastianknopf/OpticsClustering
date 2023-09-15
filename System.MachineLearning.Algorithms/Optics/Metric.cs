@@ -1,4 +1,4 @@
-﻿namespace System.Windows.MachineLearning.Optics
+﻿namespace System.MachineLearning.Optics
 {
     public enum Metric
     {

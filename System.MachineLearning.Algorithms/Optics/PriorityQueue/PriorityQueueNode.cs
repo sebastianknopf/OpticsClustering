@@ -1,4 +1,4 @@
-﻿namespace System.Windows.MachineLearning.Optics.PriorityQueue
+﻿namespace System.MachineLearning.Optics
 {
     internal class PriorityQueueNode
     {

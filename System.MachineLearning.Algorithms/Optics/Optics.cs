@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.MachineLearning.Optics.PriorityQueue;
 
-using System;
-using System.Windows.MachineLearning.Optics.PriorityQueue;
-
-namespace System.Windows.MachineLearning.Optics
+namespace System.MachineLearning.Optics
 {
     public class OPTICS
     {
@@ -24,7 +22,7 @@ namespace System.Windows.MachineLearning.Optics
             }
         }
 
-        private struct PointRelation
+        internal struct PointRelation
         {
             public readonly UInt32 To;
             public readonly double Distance;
@@ -36,14 +34,14 @@ namespace System.Windows.MachineLearning.Optics
             }
         }
 
-        readonly Point[] _points;
-        readonly double _eps;
-        readonly int _minPts;
-        readonly int _dimensions;
-        readonly List<UInt32> _outputIndexes;
-        readonly HeapPriorityQueue<Point> _seeds;
+        internal readonly Point[] _points;
+        internal readonly double _eps;
+        internal readonly int _minPts;
+        internal readonly int _dimensions;
+        internal readonly List<UInt32> _outputIndexes;
+        internal readonly HeapPriorityQueue<Point> _seeds;
 
-        readonly List<PointReachability> _reachabilities = new List<PointReachability>();
+        internal readonly List<PointReachability> _reachabilities = new List<PointReachability>();
 
         private void AddOutputIndex(UInt32 index)
         {
@@ -66,7 +64,7 @@ namespace System.Windows.MachineLearning.Optics
             _seeds = new HeapPriorityQueue<Point>(_points.Length);
         }
 
-        private double EuclideanDistance(UInt32 p1Index, UInt32 p2Index)
+        internal double EuclideanDistance(UInt32 p1Index, UInt32 p2Index)
         {
             double dist = 0;
             var vec1 = _points[p1Index].Vector;
@@ -81,7 +79,7 @@ namespace System.Windows.MachineLearning.Optics
             return Math.Sqrt(dist);
         }
 
-        private double ManhattanDistance(UInt32 p1Index, UInt32 p2Index)
+        internal double ManhattanDistance(UInt32 p1Index, UInt32 p2Index)
         {
             double dist = 0;
             var vec1 = _points[p1Index].Vector;
@@ -96,7 +94,7 @@ namespace System.Windows.MachineLearning.Optics
             return dist;
         }
 
-        private double HaversineDistance(UInt32 p1Index, UInt32 p2Index)
+        internal double HaversineDistance(UInt32 p1Index, UInt32 p2Index)
         {
             // check for vector dimensions
             var vec1 = _points[p1Index].Vector;
@@ -130,7 +128,21 @@ namespace System.Windows.MachineLearning.Optics
             return km * 1000;
         }
 
-        private void GetNeighborhood(UInt32 p1Index, List<PointRelation> neighborhoodOut)
+        internal int SecondsDistance(UInt32 p1Index, UInt32 p2Index)
+        {
+            // check for vector dimensions
+            DateTime dateTime1 = _points[p1Index].Timestamp;
+            DateTime dateTime2 = _points[p2Index].Timestamp;
+
+            if (dateTime1 == DateTime.MinValue || dateTime2 == DateTime.MinValue)
+            {
+                return int.MaxValue;
+            }
+
+            return (int) Math.Abs((dateTime2 - dateTime1).TotalSeconds);
+        }
+
+        internal virtual void GetNeighborhood(UInt32 p1Index, List<PointRelation> neighborhoodOut)
         {
             neighborhoodOut.Clear();
 
