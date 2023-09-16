@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace System.MachineLearning.ClusterPlaceRecognition
 {
@@ -13,13 +10,15 @@ namespace System.MachineLearning.ClusterPlaceRecognition
 
         protected PointList pointList;
 
-        public List<Cluster> Clusters { get; set; } = new List<Cluster>();
+        protected List<Cluster> clusterList;
 
         public ClusterPlaceRecognition(double minDurationSeconds, double maxRadius, PointList pointList)
         {
             this.minDurationSeconds = minDurationSeconds;
             this.maxRadius = maxRadius;
             this.pointList = pointList;
+
+            this.clusterList = new List<Cluster>();
         }
 
         internal double HaversineDistance(Point point1, Point point2)
@@ -78,7 +77,7 @@ namespace System.MachineLearning.ClusterPlaceRecognition
                     cluster.Latitude = possibleClusterPoints.Select(p => p.Latitude).Average();
                     cluster.Longitude = possibleClusterPoints.Select(p => p.Longitude).Average();
 
-                    this.Clusters.Add(cluster);
+                    this.clusterList.Add(cluster);
 
                     this.pointList.Points.RemoveAll(p => p.Timestamp.CompareTo(maxTimestamp) <= 0);
                 }
@@ -87,6 +86,11 @@ namespace System.MachineLearning.ClusterPlaceRecognition
                     this.pointList.Points.RemoveAll(p => p.ID == point.ID);
                 }
             }
+        }
+
+        public List<Cluster> GetClusters()
+        {
+            return this.clusterList;
         }
     }
 }
