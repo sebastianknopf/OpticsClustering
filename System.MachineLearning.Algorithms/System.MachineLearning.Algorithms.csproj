@@ -42,6 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClusterPlaceRecognition\Cluster.cs" />
+    <Compile Include="ClusterPlaceRecognition\ClusterPlaceRecognition.cs" />
+    <Compile Include="ClusterPlaceRecognition\Point.cs" />
+    <Compile Include="ClusterPlaceRecognition\PointList.cs" />
     <Compile Include="Optics\Cluster.cs" />
     <Compile Include="Optics\GeOPTICS.cs" />
     <Compile Include="Optics\Metric.cs" />
